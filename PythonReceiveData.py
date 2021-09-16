@@ -30,7 +30,7 @@ import serial
 # For Windows computers, the name is formatted like: "COM6"
 # For Apple computers, the name is formatted like: "/dev/tty.usbmodemfa141"
 #
-arduinoComPort = "COM6"
+arduinoComPort = "COM5"
 
 
 #
