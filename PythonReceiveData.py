@@ -66,12 +66,12 @@ while True:
     #
     # data was received, convert it into 4 integers
     #
-    a, b, c, d = (int(x) for x in lineOfData.split(','))
+    panPos, tiltPos, rotPos, dist = (int(x) for x in lineOfData.split(','))
 
     #
     # print the results
     #
-    print("a = " + str(a), end="")
-    print(", b = " + str(b), end="")
-    print(", c = " + str(c), end="")
-    print(", d = " + str(d))
+    print("panPos = " + str(panPos), end="")
+    print(", tiltPos = " + str(tiltPos), end="")
+    print(", rotPos = " + str(rotPos), end="")
+    print(", dist = " + str(dist))
