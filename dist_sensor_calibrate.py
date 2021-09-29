@@ -37,6 +37,8 @@ while i < numPoints:
             print(senseVal)
             aveData[j] = float(senseVal)
             j=j+1
+        else:
+            lineOfData = serialPort.readline().decode()
     
     dsData[i,0] = dist
     dsData[i,1] = float(statistics.median(aveData))
@@ -44,6 +46,6 @@ while i < numPoints:
     i=i+1
 
 print(dsData)
-np.save("calibration_data", dsData)
+np.save("calibration_data_test", dsData)
 
 

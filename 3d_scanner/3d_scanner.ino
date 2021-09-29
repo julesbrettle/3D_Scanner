@@ -11,11 +11,11 @@ int tiltPos = 0;    // variable to store the servo position
 int panPos = 0;    // variable to store the servo position
 
 
-int panMin = 10;
-int panMax = 40;
+int panMin = 0;
+int panMax = 50;
 int panStep = 1;
-int tiltMin = 15;
-int tiltMax = 50;
+int tiltMin = 0;
+int tiltMax = 60;
 int tiltStep = 1;
 
 
