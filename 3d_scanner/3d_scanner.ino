@@ -39,8 +39,8 @@ void loop() {
       delay(50);                       // waits 50 ms for the servo to reach the position
 
       unsigned long senseVal = analogRead(A0); 
-      Serial.print(tiltPos);    Serial.print(",");
       Serial.print(panPos);    Serial.print(",");
+      Serial.print(tiltPos);    Serial.print(",");
       Serial.println(senseVal);
       
     }
