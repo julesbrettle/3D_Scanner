@@ -1,0 +1,37 @@
+[a,b], co = scipy.optimize.curve_fit(lambda t,a,b: a+b*np.log(t), dsNP[1:20,1],dsNP[1:20,0])
+print(a,b)
+xs = np.linspace(np.amin(dsNP[:,1]),np.amax(dsNP[:,1]), 100)
+# xs = np.linspace(10,65, 100)
+
+ys = a+b*np.log(xs)
+# print(ys)
+
+
+fig = plt.figure()
+ax = plt.axes()
+plt.plot(dsNP[:,0],dsNP[:,1], 'o', ys,xs, '-')
+
+
+
+xyzData = [[0.0]*3] * numRows
+xyzNP = np.array(xyzData)
+j = 0
+print(np.sin(np.radians(ptsrData[j][1])))
+while j < numRows:
+    xyzNP[j,0] = ptsrNP[j,3]*np.cos(np.radians(ptsrNP[j,0]))*np.cos(np.radians(ptsrNP[j,1]))
+    xyzNP[j,2] = ptsrNP[j,3]*np.sin(np.radians(ptsrNP[j,0]))*np.cos(np.radians(ptsrNP[j,1]))
+    xyzNP[j,1] = ptsrNP[j,3]*np.sin(np.radians(ptsrNP[j,1]))
+    j = j+1
+
+print(xyzNP)
+
+fig = plt.figure()
+ax = plt.axes(projection='3d')
+ax.scatter3D(xyzNP[:,0], xyzNP[:,1], xyzNP[:,2])
+plt.xlabel("X")
+plt.ylabel("Y")
+ax.view_init(20, -135)
+
+fig = plt.figure()
+ax = plt.axes()
+plt.scatter(xyzNP[:,0], xyzNP[:,1],s=None,c=xyzNP[:,2])

@@ -2,6 +2,7 @@ import serial
 # from mpl_toolkits import mplot3d
 import numpy as np
 # import matplotlib.pyplot as plt
+import statistics
 
 arduinoComPort = "COM5"
 # Set the baud rate
@@ -12,29 +13,35 @@ serialPort = serial.Serial(arduinoComPort, baudRate, timeout=1)
 
 
 numPoints = int(input("Enter number of datapoints: "))
-dsDataZeros = [[0]*2] * numPoints
+dsDataZeros = [[0.0]*2] * numPoints
 dsData = np.array(dsDataZeros)
+aveData = [0.0]*5
 
 
 i = 0
 while i < numPoints:
-    dist = input("Enter distance: ")
+    print(i)
+    dist = float(input("Enter distance (in): "))
+    dist = dist*2.54
 
     # ask for a line of data from the serial port, the ".decode()" converts the
     # data from an "array of bytes", to a string
-    lineOfData = serialPort.readline().decode()
 
-    # check if data was received
-    if len(lineOfData) > 3:
-        # print(lineOfData)
-        # print(len(lineOfData))
-        panPos, tiltPos, rotPos, senseVal = (int(x) for x in lineOfData.split(','))
-        dsData[i,0] = dist
-        dsData[i,1] = senseVal
-        print(dsData[i,:])
-        i=i+1
-    else:
-        print("senseVal recording failed. Please reenter distance.")
+    serialPort.flushInput()
+    lineOfData = serialPort.readline().decode()
+    j=0
+    while j < len(aveData):
+        if len(lineOfData) > 3:
+            lineOfData = serialPort.readline().decode()
+            panPos, tiltPos, senseVal = (int(x) for x in lineOfData.split(','))
+            print(senseVal)
+            aveData[j] = float(senseVal)
+            j=j+1
+    
+    dsData[i,0] = dist
+    dsData[i,1] = float(statistics.median(aveData))
+    print(dsData[i,:])
+    i=i+1
 
 print(dsData)
 np.save("calibration_data", dsData)
