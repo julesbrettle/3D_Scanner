@@ -23,10 +23,11 @@ dsData = np.array(dsDataZeros)
 # create a blank array for senseVals to be stored in before they are averaged
 aveData = [0.0]*5
 
-
+print("\n")
 i = 0
 while i < numPoints:
-    print(i)
+    print("\n")
+    # print(i) # uncomment to see the row index of the datapoint to be entered before entering the distance
     dist = float(input("Enter distance (in): "))
     dist = dist*2.54 # convert from inches to cm
     # sensor datasheet is in cm, but we only had a inches tape measure availible
@@ -36,6 +37,7 @@ while i < numPoints:
     lineOfData = serialPort.readline().decode() # throw out this lineOfData immediately because it might be partially flushed
     lineOfData = serialPort.readline().decode() # get the real lineOfData to be recorded in the averaging array
     
+    print("\n senseVals to average:")
     j=0
     while j < len(aveData): # fill the averaging array
         if len(lineOfData) > 3: # check that this isn't a single charactor line indicating that the 3D scan is done (we don't care rn, we just want the current senseVal)
@@ -49,11 +51,14 @@ while i < numPoints:
     
     dsData[i,0] = dist # add the input measured distance to the final data array
     dsData[i,1] = float(statistics.median(aveData)) # find the median of the averaging array and put in the final data array
+    
+    print("new row (distance (cm), senseVal):")
     print(dsData[i,:])
 
     i=i+1
 
-print(dsData)
 np.save("calibration_data", dsData) # modify this string to change where the array gets saved
 
+print("\n saved array:")
+print(dsData)
 
